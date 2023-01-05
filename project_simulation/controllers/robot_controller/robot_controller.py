@@ -1,18 +1,26 @@
-
 from controller import Robot, Motor, Camera
 import numpy as np
 import cv2 
+import camera as cam
 
 # cv2.startWindowThread()
 # cv2.namedWindow("preview")
 
+
+
 robot = Robot()
+timestep = int(robot.getBasicTimeStep())
+cam.startCameraFeed(robot)
 
 r1= robot.getDevice('wheel_right1')
 r2= robot.getDevice('wheel_right2')
 l1= robot.getDevice('wheel_left1')
 l2= robot.getDevice('wheel_left2')
 sweeper= robot.getDevice('sweeper_motor')
+distanceSensorLeft= robot.getDevice('distance_sensor_center')
+distanceSensorLeft.enable(timestep)
+distanceSensorLeft2= robot.getDevice('distance_sensor_center_2')
+distanceSensorLeft2.enable(timestep)
 
 # camera = robot.getDevice('camera')
 # camera.enable(100)
@@ -25,8 +33,9 @@ slab_linear.setVelocity(0.1)
 # slat_rotational.setVelocity(0.5)
 
 
-timestep = int(robot.getBasicTimeStep())
+
 while robot.step(timestep) != -1:
+    print(distanceSensorLeft.getValue(),distanceSensorLeft2.getValue())
     sweeper_speed=0
     left=0
     right=left
