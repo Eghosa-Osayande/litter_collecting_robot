@@ -1,23 +1,17 @@
 from enums import ObstacleMovementState
+
+
 class ObstacleStatus():
 
-    def __init__(self, left: bool, right: bool, front: bool, back: bool):
+    def __init__(
+        self, left: bool, right: bool, frontRight: bool, frontLeft: bool, backRight: bool, backLeft: bool,
+    ):
         self.right: bool = right
         self.left: bool = left
-        self.front: bool = front
-        self.back: bool = back
-
-    def getMovementState(self):
-        if not self.front:
-            return ObstacleMovementState.FORWARD
-        elif not self.right:
-            return ObstacleMovementState.RIGHT
-        elif not self.left:
-            return ObstacleMovementState.LEFT
-        elif not self.back:
-            return ObstacleMovementState.BACKWARD
-        else:
-            return ObstacleMovementState.WAIT
+        self.frontRight: bool = frontRight
+        self.frontLeft: bool = frontLeft
+        self.backRight: bool = backRight
+        self.backLeft: bool = backLeft
 
 
 class DistanceSensorUtil:
@@ -31,11 +25,11 @@ class DistanceSensorUtil:
         self.sensorBottle2 = robot.getDevice('distance_sensor_center_2')
         self.sensorBottle2.enable(time_step)
 
-        self.sensorFrontWall = robot.getDevice('distance_sensor_left')
-        self.sensorFrontWall.enable(time_step)
+        self.sensorFrontWallLeft = robot.getDevice('distance_sensor_left')
+        self.sensorFrontWallLeft.enable(time_step)
 
-        self.sensorFrontWall2 = robot.getDevice('distance_sensor_right')
-        self.sensorFrontWall2.enable(time_step)
+        self.sensorFrontWallRight = robot.getDevice('distance_sensor_right')
+        self.sensorFrontWallRight.enable(time_step)
 
         self.sensorLeftWall = robot.getDevice('distance_sensor_left_wall')
         self.sensorLeftWall.enable(time_step)
@@ -43,35 +37,31 @@ class DistanceSensorUtil:
         self.sensorRightWall = robot.getDevice('distance_sensor_right_wall')
         self.sensorRightWall.enable(time_step)
 
-        self.sensorBackWall = robot.getDevice('distance_sensor_back_wall')
-        self.sensorBackWall.enable(time_step)
+        self.sensorBackWallRight = robot.getDevice(
+            'distance_sensor_back_wall_right')
+        self.sensorBackWallRight.enable(time_step)
 
-        self.sensorBackWall2 = robot.getDevice('distance_sensor_back_wall_2')
-        self.sensorBackWall2.enable(time_step)
+        self.sensorBackWallLeft = robot.getDevice(
+            'distance_sensor_back_wall_left')
+        self.sensorBackWallLeft.enable(time_step)
 
         robot.step(time_step)
 
     def getObstacleStatus(self) -> ObstacleStatus:
-        front = self.sensorFrontWall.getValue()
-        front2 = self.sensorFrontWall2.getValue()
+        frontLeft = self.sensorFrontWallLeft.getValue()
+        frontRight = self.sensorFrontWallRight.getValue()
 
-        back = self.sensorBackWall.getValue()
-        back2 = self.sensorBackWall2.getValue()
+        backLeft = self.sensorBackWallRight.getValue()
+        backRight = self.sensorBackWallLeft.getValue()
 
         left = self.sensorLeftWall.getValue()
         right = self.sensorRightWall.getValue()
 
         return ObstacleStatus(
-            front=front < 100 or front2 < 100,
-            back=back < 100 or back2 < 100,
+            frontRight=frontRight < 100,
+            frontLeft=frontLeft < 100,
+            backRight=backRight < 100,
+            backLeft=backLeft < 100,
             left=left < 100,
             right=right < 100,
         )
-
-    def isBottleInRange(self) -> bool:
-        center1 = self.sensorBottle.getValue()
-        center2 = self.sensorBottle.getValue()
-        if center1 < 13.7 or center2 < 13.7:
-            return True
-        else:
-            return False

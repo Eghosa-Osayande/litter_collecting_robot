@@ -1,7 +1,7 @@
 from math import pi
 
-_SLIDE_SPEED: int = 0.1
-_ANGLE_SPEED: int = 1
+_SLIDE_SPEED: int = 0.05
+_ANGLE_SPEED: int = 0.5
 INF = float('inf')
 
 
@@ -62,7 +62,7 @@ class SliderControl:
         pos3= self.rotation_position_sensor.getValue()
         if pos3 <= -(pi/2):
             pos3=0
-            for i in range(angleSteps):
+            for i in range(int(angleSteps/2)):
                 self._turn(position= pos3, speed=_ANGLE_SPEED)
                 self.robot.step(time_step)
 
@@ -70,6 +70,6 @@ class SliderControl:
         pos4 = self.slider_position_sensor.getValue()
         if pos4 >= 0.3:
             pos4=0
-            for i in range(slideSteps):
+            for i in range(int(slideSteps/2)):
                 self._slide(position= pos4, speed=_SLIDE_SPEED)
                 self.robot.step(time_step)

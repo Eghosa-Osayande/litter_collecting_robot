@@ -1,7 +1,6 @@
-from controller import Robot
 from math import pi
 
-_SPEED: int = 5
+_SPEED: int = 2.5
 INF = float('inf')
 
 
@@ -9,7 +8,7 @@ class SweeperControl:
     sweeper = None
     position_sensor= None
 
-    def __init__(self, robot: Robot) -> None:
+    def __init__(self, robot) -> None:
         time_step = int(robot.getBasicTimeStep())
         self.sweeper = robot.getDevice('sweeper_motor')
         self.position_sensor = robot.getDevice('sweeper_position_sensor')
@@ -35,3 +34,5 @@ class SweeperControl:
         for i in range(steps):
             self._turn(position= pos, speed=_SPEED)
             self.robot.step(time_step)
+
+        

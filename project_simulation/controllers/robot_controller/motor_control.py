@@ -1,13 +1,12 @@
 from math import pi
 
-_SPEED: int = 10
+_SPEED: int = 5
 INF = float('inf')
 
-wheelRadius = 0.05
-wheelPerimeter = 2 * pi * wheelRadius
+WHEEL_RADIUS = 0.05
 
 def calculateRadianDistanceFromLinearDistace(distance: float):
-    return distance/wheelRadius
+    return distance/WHEEL_RADIUS
 
 
 class MotorControl:
@@ -69,6 +68,7 @@ class MotorControl:
         self._turn(right=-1,left=-1)
 
     def turnLeftStep(self):
+        
         self._turn(right=1,left=0)
 
     def turnRightStep(self):
