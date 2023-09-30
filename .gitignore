@@ -1,1 +1,8 @@
 /.DS_Store
+.env/
+downloaded_softwares/
+rawn/
+rawp/
+old_imagez/
+raw_imagez/
+__pycache__

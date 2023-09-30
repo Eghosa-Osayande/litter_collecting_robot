@@ -1,0 +1,7 @@
+python -m venv .env/
+
+source .env/Scripts/activate
+
+pip freeze > requirements.txt 
+
+pip install opencv-contrib-python
