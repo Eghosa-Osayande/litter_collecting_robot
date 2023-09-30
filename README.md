@@ -2,7 +2,7 @@
 
 ## My Final year undergraduate project at the University of Benin
 
-https://github.com/Eghosa-Osayande/litter_collecting_robot/assets/69315505/5d9d10f9-3de1-4b82-be30-53f74a2cd9bc
+https://github.com/Eghosa-Osayande/litter_collecting_robot/assets/69315505/e04e927b-cc39-4fc6-b054-e9038c9c72ab
 
 ```This repository contains both the simulation files and the final project report.```
 
